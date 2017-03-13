@@ -7,9 +7,6 @@
     "type": "git",
     "url": "https://github.com/phodal/lan.git"
   },
-  "engines": {
-    "node": "0.12.x"
-  },
   "author": "Phodal Huang",
   "files": [
     "dist"
@@ -29,25 +26,25 @@
   },
   "dependencies": {
     "body-parser": "~1.13.2",
-    "coap": "^0.12.1",
+    "coap": "^0.18.0",
     "config": "^1.15.0",
     "cookie-parser": "~1.3.5",
     "cron": "^1.0.9",
     "debug": "~2.2.0",
     "express": "~4.13.1",
     "express-session": "^1.11.3",
-    "jade": "~1.11.0",
+    "pug": "2.0.0-beta6",
     "mongodb": "^2.0.42",
     "morgan": "~1.6.1",
-    "mqtt": "^1.6.0",
-    "node-uuid": "^1.4.3",
+    "mqtt": "^1.11.0",
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",
     "sequelize": "^3.5.1",
     "serve-favicon": "~2.3.0",
     "sqlite3": "^3.0.9",
     "underscore": "^1.8.3",
-    "ws": "^0.8.1"
+    "uuid": "^3.0.0",
+    "ws": "^1.1.1"
   },
   "devDependencies": {
     "sequelize-cli": "^1.9.1",
