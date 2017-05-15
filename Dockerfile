@@ -1,6 +1,7 @@
 # Pull base image.
 FROM ubuntu:14.04
 
+RUN sed -i 's/http:\/\/archive.ubuntu.com\/ubuntu\//http:\/\/mirrors.163.com\/ubuntu\//g' /etc/apt/sources.list
 
 # Install MongoDB.
 RUN \
@@ -32,6 +33,7 @@ EXPOSE 8898:8898
 # Install Node.js
 RUN curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
 RUN apt-get install -y nodejs
+RUN npm cache clean -f && npm install -g n && n stable && node --version
 # Define working directory.
 
 RUN cd /home
