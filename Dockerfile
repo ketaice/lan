@@ -31,13 +31,13 @@ EXPOSE 8899:8899
 EXPOSE 8898:8898
 
 # Install Node.js
-RUN curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
-RUN apt-get install -y nodejs
+#RUN curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
+RUN apt-get install -y nodejs npm
 RUN npm cache clean -f && npm install -g n && n stable && node --version
 # Define working directory.
 
 RUN cd /home
-RUN git clone http://github.com/phodal/lan /home/lan
+RUN git clone http://github.com/ketaice/lan /home/lan
 
 WORKDIR /home/lan
 RUN npm install --production
