@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 
 var routes = require('./server/index');
+var apis = require('./server/api_v1');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var config = require('config');
@@ -84,6 +85,7 @@ configure = function () {
   app.use(cookieParser());
   app.use(express.static(path.join(__dirname + '/server', 'public')));
   app.use('/', routes);
+  app.use(apis.rester(apis.apiOptions));
 
   app.config = config;
   var modules = config.get('modules');
