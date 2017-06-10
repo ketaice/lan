@@ -89,5 +89,6 @@ rest.post('/device', function(req, context, cb){
         })
 });
 
-module.exports.api = rest;
-module.exports.apiOptions = apiOptions;
+module.exports = function(app){
+    app.use(rest.rester(apiOptions));
+};
