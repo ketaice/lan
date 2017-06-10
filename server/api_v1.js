@@ -1,4 +1,3 @@
-var express = require('express');
 var rest = require('connect-rest');
 var models = require('../models/');
 
@@ -59,7 +58,7 @@ rest.get('/device/:id', function(req, context, cb){
     });
 });
 
-rett.post('/device', function(req, context, cb){
+rest.post('/device', function(req, context, cb){
     'use strict';
     if (!req.isAuthenticated()){
         return cb(401, { error: 'Unauthenticated!' });
