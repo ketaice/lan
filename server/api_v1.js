@@ -1,14 +1,16 @@
-var rest = require('connect-rest');
+var Rest = require('connect-rest');
 var models = require('../models/');
 
 var apiOptions = {
-    context: "v1",
+    context: "/v1",
     domain: require('domain').create(),
 };
 
 apiOptions.domain.on('error', function(err){
     console.log('API domain error.\n', err.stack);
 });
+
+var rest = Rest.create(apiOptions);
 
 rest.get('/', function(req, context, cb){
     'use strict';
@@ -90,5 +92,5 @@ rest.post('/device', function(req, context, cb){
 });
 
 module.exports = function(app){
-    app.use(rest.rester(apiOptions));
+    app.use(rest.processRequest());
 };
