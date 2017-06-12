@@ -13,7 +13,7 @@ describe('API services Test', function() {
     before(function () {
         var models = require('../../models');
         models.Device.create({
-            devid: '201700100001',
+            devid: '201700100002',
             password: '12345678',
             expiration: '2027-01-01',
             ower: 'keta'
@@ -31,7 +31,13 @@ describe('API services Test', function() {
 
     it("should able load the decribe page", function (done) {
         agent
-            .get('/')
+            .get('/v1/')
             .expect(200, done);
     });
+
+    it("should get the device list", function (done) {
+        agent
+            .get('/v1/devices')
+            .expect(200, done);
+    })
 });
