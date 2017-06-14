@@ -38,6 +38,7 @@ describe('API services Test', function() {
     it("should get the device list", function (done) {
         agent
             .get('/v1/devices')
+            .auth('root', 'root')
             .expect(200, done);
     })
 });

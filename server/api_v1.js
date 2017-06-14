@@ -19,11 +19,11 @@ rest.get('/', function(req, context, cb){
 
 rest.get('/devices', function(req, context, cb){
     'use strict';
-    if (!req.isAuthenticated()){
-        var error = new Error('Unauthenticated!');
-        error.statusCode = 401;
-        return cb(error);
-    }
+    // if (!req.isAuthenticated()){
+    //     var error = new Error('Unauthenticated!');
+    //     error.statusCode = 401;
+    //     return cb(error);
+    // }
 
     models.Device.findAll()
     .then(function(devices){
@@ -52,11 +52,11 @@ rest.get('/devices', function(req, context, cb){
 
 rest.get('/device/:id', function(req, context, cb){
     'use strict';
-    if (!req.isAuthenticated()){
-        var error = new Error('Unauthenticated!');
-        error.statusCode = 401;
-        return cb(error);
-    }
+    // if (!req.isAuthenticated()){
+    //     var error = new Error('Unauthenticated!');
+    //     error.statusCode = 401;
+    //     return cb(error);
+    // }
 
     models.Device.findOne({where: {devid: req.params.id}})
     .then(function(device){
@@ -72,11 +72,11 @@ rest.get('/device/:id', function(req, context, cb){
 
 rest.post('/device', function(req, context, cb){
     'use strict';
-    if (!req.isAuthenticated()){
-        var error = new Error('Unauthenticated!');
-        error.statusCode = 401;
-        return cb(error);
-    }
+    // if (!req.isAuthenticated()){
+    //     var error = new Error('Unauthenticated!');
+    //     error.statusCode = 401;
+    //     return cb(error);
+    // }
 
     var devInfo = {
         devid: req.body.devid,
