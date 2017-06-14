@@ -20,13 +20,17 @@ rest.get('/', function(req, context, cb){
 rest.get('/devices', function(req, context, cb){
     'use strict';
     if (!req.isAuthenticated()){
-        return cb(401, { error: 'Unauthenticated!' });
+        var error = new Error('Unauthenticated!');
+        error.statusCode = 401;
+        return cb(error);
     }
 
     models.Device.findAll()
     .then(function(devices){
         if (!devices) {
-            return cb(403, {error: 'Device list is empty!'});
+            var error = new Error('Device list is empty!');
+            error.statusCode = 403;
+            return cb(error);
         }
 
         var devList;
@@ -40,20 +44,26 @@ rest.get('/devices', function(req, context, cb){
     })
     .catch(function (err){
         console.log(`findAll err:` + err);
-        return cb(500, {error: 'Database err!'});
+        var error = new Error('Database err!');
+        error.statusCode = 500;
+        return cb(error);
     });
 })
 
 rest.get('/device/:id', function(req, context, cb){
     'use strict';
     if (!req.isAuthenticated()){
-        return cb(401, { error: 'Unauthenticated!' });
+        var error = new Error('Unauthenticated!');
+        error.statusCode = 401;
+        return cb(error);
     }
 
     models.Device.findOne({where: {devid: req.params.id}})
     .then(function(device){
         if (!device) {
-            return cb(403, {error: 'No such device'});
+            var error = new Error('No such device');
+            error.statusCode = 403;
+            return cb(error);
         }
 
         return cb(null, {device: device});
@@ -63,7 +73,9 @@ rest.get('/device/:id', function(req, context, cb){
 rest.post('/device', function(req, context, cb){
     'use strict';
     if (!req.isAuthenticated()){
-        return cb(401, { error: 'Unauthenticated!' });
+        var error = new Error('Unauthenticated!');
+        error.statusCode = 401;
+        return cb(error);
     }
 
     var devInfo = {
@@ -76,11 +88,15 @@ rest.post('/device', function(req, context, cb){
         .validate()
         .then(function (err) {
             if (err) {
-                return cb(403, {err: 'Something wrong!'});
+                var error = new Error('Something wrong!');
+                error.statusCode = 403;
+                return cb(error);
             }
             models.Device.create(devInfo).then(function (device, err){
                 if (err) {
-                    return cb(403, {err: 'Create device fail!'});
+                    var error = new Error('Create device fail!');
+                    error.statusCode = 403;
+                    return cb(error);
                 }
                 
                 return cb(null, {
