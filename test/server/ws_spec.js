@@ -27,7 +27,7 @@ describe('WebSocket Services Test', function () {
   });
 
   it('basic connection', function (done) {
-    var ws = new WebSocket('ws://root:root@localhost:8898/');
+    var ws = new WebSocket('ws://admin:admin@localhost:8898/');
 
     ws.on('open', function open() {
       ws.send('something');

@@ -26,7 +26,7 @@ describe('CoAP Services Test', function () {
 
   it('should able connect to coap server', function (done) {
     var request = coap.request;
-    var req = request({hostname: 'localhost', port: 5683, pathname: 'device', method: 'GET', query: 'root:root'});
+    var req = request({hostname: 'localhost', port: 5683, pathname: 'device', method: 'GET', query: 'admin:admin'});
 
     req.on('response', function (res) {
       if (res.code === '2.05') {
@@ -62,7 +62,7 @@ describe('CoAP Services Test', function () {
   });
 
   it('should unable connect to coap server when password error', function (done) {
-    var req = coap.request('coap://localhost/device?phodal:root');
+    var req = coap.request('coap://localhost/device?phodal:admin');
 
     req.on('response', function (res) {
       if (res.code === '4.03') {
@@ -108,7 +108,7 @@ describe('CoAP Services Test', function () {
 
   it('should not able to post data with auth', function (done) {
     var request = coap.request;
-    var req = request({hostname: 'localhost', port: 5683, pathname: 'device/phodal', method: 'POST', query: 'phodal:root'});
+    var req = request({hostname: 'localhost', port: 5683, pathname: 'device/phodal', method: 'POST', query: 'phodal:admin'});
 
     var payload = {
       title: 'this is a test payload',
@@ -166,7 +166,7 @@ describe('CoAP Services Test', function () {
 
   it('should unable to POST data with username error', function (done) {
     var request = coap.request;
-    var req = request({hostname: 'localhost', port: 5683, pathname: 'device/1', method: 'POST', query: 'root:phodal'});
+    var req = request({hostname: 'localhost', port: 5683, pathname: 'device/1', method: 'POST', query: 'admin:phodal'});
 
     var payload = {
       device: 'this is a device 1'
@@ -197,9 +197,9 @@ describe('CoAP Services Test', function () {
     req.end();
   });
 
-  it('should not return root"s device 2 result', function (done) {
+  it('should not return admin"s device 2 result', function (done) {
     var request = coap.request;
-    var req = request({hostname: 'localhost', port: 5683, pathname: 'device/2', method: 'GET', query: 'root:root'});
+    var req = request({hostname: 'localhost', port: 5683, pathname: 'device/2', method: 'GET', query: 'admin:admin'});
 
     req.on('response', function (res) {
       var topicResult = JSON.parse(res.payload.toString()).result;

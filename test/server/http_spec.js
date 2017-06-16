@@ -35,8 +35,8 @@ describe('HTTP Services Test', function () {
   it('should able connect to http server', function (done) {
     request.get('http://localhost:8899/topics/test', {
         'auth': {
-          'username': 'root',
-          'password': 'root'
+          'username': 'admin',
+          'password': 'admin'
         }
       },
       function (error, response) {

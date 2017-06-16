@@ -52,7 +52,7 @@ describe('Application Services Test', function () {
 
   it("should redirect when visit profile without login", function (done) {
     agent
-      .get('/users/root')
+      .get('/users/admin')
       .expect(302, done);
   });
 
