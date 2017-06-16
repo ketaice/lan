@@ -14,7 +14,7 @@ var rest = Rest.create(apiOptions);
 
 rest.get('/', function(req, context, cb){
     'use strict';
-    return cb(null, {msg: 'Select a device, eg. /device/:id'});
+    return cb(null, {msg: 'Select a device, eg. /devices/:id'});
 });
 
 rest.get('/devices', function(req, context, cb){
@@ -50,7 +50,7 @@ rest.get('/devices', function(req, context, cb){
     });
 })
 
-rest.get('/device/:id', function(req, context, cb){
+rest.get('/devices/:id', function(req, context, cb){
     'use strict';
     // if (!req.isAuthenticated()){
     //     var error = new Error('Unauthenticated!');
@@ -70,7 +70,7 @@ rest.get('/device/:id', function(req, context, cb){
     });
 });
 
-rest.post('/device', function(req, context, cb){
+rest.post('/devices', function(req, context, cb){
     'use strict';
     // if (!req.isAuthenticated()){
     //     var error = new Error('Unauthenticated!');

@@ -18,7 +18,7 @@ describe('Device Model', function () {
             devid: '201700100001',
             password: '12345678',
             expiration: '2027-01-01',
-            ower: 'keta'
+            ower: 'admin'
         }).then(function () {
             models.Device.findOne({where: {devid: '201700100001'}}).then(function(device){
                 if (device.devid === '201700100001') {

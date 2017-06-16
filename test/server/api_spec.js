@@ -16,7 +16,7 @@ describe('API services Test', function() {
             devid: '201700100002',
             password: '12345678',
             expiration: '2027-01-01',
-            ower: 'keta'
+            ower: 'admin'
         });
 
         server = app.listen(8899, function () {
@@ -35,10 +35,32 @@ describe('API services Test', function() {
             .expect(200, done);
     });
 
-    it("should get the device list", function (done) {
+    it("should get the devices list", function (done) {
         agent
             .get('/v1/devices')
-            .auth('root', 'root')
+            .auth('admin', 'admin')
             .expect(200, done);
-    })
+    });
+
+    it("should get the single device", function (done) {
+        agent
+            .get('/v1/devices/201700100002')
+            .expect(200, done);
+    });
+
+    it("should unable to get the device", function (done) {
+        agent
+            .get('/v1/devices/201700100009')
+            .expect(403, done);
+    });
+
+    it("should able to add a new device", function (done) {
+        agent
+            .post('/v1/devices')
+            .send({devid: '201700100003', password: '12345678', ower: 'admin'})
+            .end(function (err, res) {
+                done();
+            });
+    });
+
 });

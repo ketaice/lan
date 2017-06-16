@@ -19,7 +19,7 @@ describe('Application Services Test', function () {
     models.User.create({
       name: 'phodal',
       password: 'phodal',
-      expiration: '2016-03-03',
+      expiration: '2027-01-01',
       uuid: '84e824cb-bfae-4d95-a76d-51103c556057',
       phone: '12345678901',
       alias: 'fengda'
@@ -66,7 +66,7 @@ describe('Application Services Test', function () {
   it("should unable to register with lan", function (done) {
     agent
       .post('/register')
-      .send({name: 'root', password: 'root', phone: '1234567890', alias: "something"})
+      .send({name: 'admin', password: 'admin', phone: '1234567890', alias: "something"})
       .end(function (err, res) {
         done();
       })
