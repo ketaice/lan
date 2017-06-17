@@ -5,13 +5,13 @@ var models = require('../models');
 module.exports = {
   up: function (queryInterface, Sequelize, done) {
     models.User.create({
-      name: 'root',
-      password: 'root',
-      expiration: '2016-03-03',
+      name: 'admin',
+      password: 'admin',
+      expiration: '2027-01-01',
       uuid: '84e824cb-bfae-4d95-a76d-51103c556057',
       phone: '12345678901',
       isAdmin: true,
-      alias: 'fengda'
+      alias: 'keta'
     }).then(function () {
       done();
     })

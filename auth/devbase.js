@@ -2,7 +2,7 @@ var model = require('../models');
 
 module.exports = function (devInfo, noUserCB, successCB, errorCB) {
   'use strict';
-  model.Device.findOne({where: {devid: devInfo.devid}}).then(function (device) {
+  model.Device.findOne({where: {devid: devInfo.name}}).then(function (device) {
     if (!device) {
       return noUserCB();
     }

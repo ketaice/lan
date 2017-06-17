@@ -20,8 +20,8 @@ describe('MQTT Services Test', function () {
   describe('connect test', function () {
     it('should able connect to mqtt server', function (done) {
       var client = mqtt.connect('http://127.0.0.1', {
-        username: 'admin',
-        password: 'admin'
+        username: '201700100001',
+        password: '12345678'
       });
 
       client.on('connect', function (packet) {
@@ -34,7 +34,7 @@ describe('MQTT Services Test', function () {
 
     //it('should unable connect to mqtt server when lost password', function (done) {
     //  var client = mqtt.connect('http://127.0.0.1', {
-    //    username: 'admin'
+    //    username: '201700100001'
     //  });
     //
     //  client.on('error', function () {
@@ -45,7 +45,7 @@ describe('MQTT Services Test', function () {
     //
     //it('should unable connect to mqtt server when username & password error', function (done) {
     //  var client = mqtt.connect('http://127.0.0.1', {
-    //    username: 'root',
+    //    username: '201700100001',
     //    password: 'password'
     //  });
     //
@@ -58,8 +58,8 @@ describe('MQTT Services Test', function () {
 
   it('should able to sub/pub message', function (done) {
     var client = mqtt.connect('http://127.0.0.1', {
-      username: 'admin',
-      password: 'admin'
+      username: '201700100001',
+      password: '12345678'
     });
 
     client.on('connect', function () {
