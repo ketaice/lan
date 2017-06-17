@@ -33,11 +33,14 @@ rest.get('/devices', function(req, context, cb){
             return cb(error);
         }
 
-        var devList;
+        var devList = [];
 
         devices.forEach(function(device) {
-            console.log(`${device.id}: ${device.devid}`);
-            devList += device;
+            devList.push({
+                devid: device.devid,
+                online: device.online,
+                ower: device.ower
+            });
         }, this);
 
         return cb(null, {devices: devList});
@@ -66,7 +69,11 @@ rest.get('/devices/:id', function(req, context, cb){
             return cb(error);
         }
 
-        return cb(null, {device: device});
+        return cb(null, {devices: {
+            devid: device.devid,
+            online: device.online,
+            ower: device.ower
+        }});
     });
 });
 
