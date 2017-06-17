@@ -6,7 +6,7 @@ module.exports = function (devInfo, noUserCB, successCB, errorCB) {
     if (!device) {
       return noUserCB();
     }
-    device.comparePassword(userInfo.password, function (err, result) {
+    device.comparePassword(devInfo.password, function (err, result) {
       if (result) {
         return successCB(device);
       } else {
