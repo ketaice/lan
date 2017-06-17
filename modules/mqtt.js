@@ -21,7 +21,7 @@ module.exports = function (app) {
         });
       }
       client.id = packet.client;
-      console.log(packet.password);
+      console.log(typeof(packet.password));
       var reqUserInfo = {
         name: packet.username,
         password: packet.password.toString()
