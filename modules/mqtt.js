@@ -21,10 +21,9 @@ module.exports = function (app) {
         });
       }
       client.id = packet.client;
-      console.log(typeof(packet.password));
       var reqUserInfo = {
         name: packet.username,
-        password: packet.password.toString()
+        password: packet.password
       };
 
       var errorCB = function () {
