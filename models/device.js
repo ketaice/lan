@@ -1,5 +1,6 @@
 var config = require('config');
 var encrypt = require('./encrypt/' + config.get('encrypt'));
+var uuid = require('uuid');
 
 'use strict';
 module.exports = function(sequelize, DataTypes) {
@@ -14,6 +15,11 @@ module.exports = function(sequelize, DataTypes) {
       device.set('password', hash);
       done();
     });
+  }
+
+  function generateUID(user, options, done) {
+    user.set('uid', uuid.v4());
+    done();
   }
   
   var Device = sequelize.define('Device', {
@@ -61,7 +67,12 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: false
     },
-    expiration: DataTypes.DATE
+    expiration: DataTypes.DATE,
+    uid: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV1,
+      primaryKey: true
+    }
   }, {
     classMethods: {
       associate: function(models) {
@@ -71,7 +82,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     hooks: {
-      beforeCreate: hashPasswordHook,
+      beforeCreate: [hashPasswordHook, generateUID],
       beforeUpdate: hashPasswordHook
     },
     instanceMethods: {

@@ -1,6 +1,6 @@
 var Database = require('../persistence/mongo');
 var db = new Database();
-var authCheck = require('../auth/devbasic');
+var authCheck = require('../auth/basic');
 
 module.exports = function (app) {
   'use strict';
@@ -23,7 +23,7 @@ module.exports = function (app) {
       client.id = packet.client;
       var reqUserInfo = {
         name: packet.username,
-        password: packet.password
+        password: packet.password.toString()
       };
 
       var errorCB = function () {
@@ -57,9 +57,9 @@ module.exports = function (app) {
 
       client.suback({messageId: packet.messageId, granted: granted});
 
-      db.subscribe({name: userInfo.name, token: userInfo.uid}, function (result) {
+      db.subscribe({name: userInfo.devid, token: userInfo.uid}, function (result) {
         return client.publish({
-          topic: userInfo.name.toString(),
+          topic: userInfo.devid.toString(),
           payload: JSON.stringify(result)
         });
       });
@@ -68,7 +68,7 @@ module.exports = function (app) {
       var k;
       var i;
       var payload = {
-        name: userInfo.name,
+        name: userInfo.devid,
         token: userInfo.uid,
         data: packet.payload.toString()
       };
