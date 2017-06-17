@@ -1,6 +1,6 @@
 var Database = require('../persistence/mongo');
 var db = new Database();
-var authCheck = require('../auth/basic');
+var authCheck = require('../auth/devbasic');
 
 module.exports = function (app) {
   'use strict';
