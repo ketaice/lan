@@ -1,6 +1,6 @@
 var Database = require('../persistence/mongo');
 var db = new Database();
-var authCheck = require('../auth/devbasic');
+var authCheck = require('../auth/basic');
 
 module.exports = function (app) {
   'use strict';
@@ -23,7 +23,7 @@ module.exports = function (app) {
       client.id = packet.client;
       var reqUserInfo = {
         name: packet.username,
-        password: packet.password
+        password: packet.password.toString()
       };
 
       var errorCB = function () {
