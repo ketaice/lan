@@ -31,16 +31,16 @@ EXPOSE 8899:8899
 EXPOSE 8898:8898
 
 # Install Node.js
-#RUN curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
+RUN curl -sL https://deb.nodesource.com/setup_7.x | sudo bash -
 RUN apt-get install -y nodejs npm
-RUN npm cache clean -f && npm install -g n && n stable && node --version
+#RUN npm cache clean -f && npm install -g n && n stable && node --version
 # Define working directory.
 
 RUN cd /home
 RUN git clone http://github.com/ketaice/lan /home/lan
 
 WORKDIR /home/lan
-RUN npm install --production
+RUN npm install
 RUN npm install -g sequelize-cli
 RUN npm install -g forever
 RUN sequelize db:migrate
