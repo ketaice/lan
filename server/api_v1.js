@@ -114,6 +114,46 @@ rest.post('/devices', function(req, context, cb){
         })
 });
 
+rest.put('/devices:id', function(req, context, cb){
+    'use strict';
+
+    models.Device.findOne({where: {devid: req.params.id}})
+    .then(function(device){
+        if (!device) {
+            var error = new Error('No such device');
+            error.statusCode = 403;
+            return cb(error);
+        }
+        
+        var devInfo = {
+            devid: device.devid,
+            password: req.body.password,
+            ower: req.body.ower
+        };
+        if (req.body.password !== 'undefined') {
+            devInfo.password = req.body.password;
+        }
+        if (req.body.ower !== 'undefined') {
+            devInfo.ower = req.body.ower;
+        }
+        if (req.body.online !== 'undefined') {
+            devInfo.online = req.body.online;
+        }
+        models.Device.update(devInfo, {where: {devid: req.params.id}})
+        .then(function (device, err){
+            if (err) {
+                var error = new Error('Update device fail!');
+                error.statusCode = 403;
+                return cb(error);
+            }
+                
+            return cb(null, {
+                devid: device.devid
+            });
+        });
+    });
+});
+
 module.exports = function(app){
     app.use(rest.processRequest());
 };

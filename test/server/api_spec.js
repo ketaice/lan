@@ -63,4 +63,12 @@ describe('API services Test', function() {
             });
     });
 
+    it("should able to set device online", function (done) {
+        agent
+            .put('/v1/devices/201700100001')
+            .send({online: true})
+            .end(function (err, res){
+                done();
+            });
+    });
 });
