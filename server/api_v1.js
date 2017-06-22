@@ -119,11 +119,11 @@ rest.put('/devices:id', function(req, context, cb){
 
     models.Device.findOne({where: {devid: req.params.id}})
     .then(function(device){
-        if (!device) {
-            var error = new Error('No such device');
-            error.statusCode = 404;
-            return cb(error);
-        }
+        // if (!device) {
+        //     var error = new Error('No such device');
+        //     error.statusCode = 404;
+        //     return cb(error);
+        // }
         
         var devInfo = {};
         if (req.body.password !== 'undefined') {
@@ -135,6 +135,7 @@ rest.put('/devices:id', function(req, context, cb){
         if (req.body.online !== 'undefined') {
             devInfo.online = req.body.online;
         }
+        console.log("online: " + req.body.online);
         device.updateAttributes({
             online: req.body.online
         })
