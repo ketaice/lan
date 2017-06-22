@@ -125,7 +125,11 @@ rest.put('/devices/:id', function(req, context, cb){
             return cb(error);
         }
         
-        var devInfo = {};
+        var devInfo = {
+            devid: device.devid,
+            password: req.body.password,
+            ower: req.body.ower
+        };
         if (req.body.password !== 'undefined') {
             devInfo.password = req.body.password;
         }
@@ -135,11 +139,14 @@ rest.put('/devices/:id', function(req, context, cb){
         if (req.body.online !== 'undefined') {
             devInfo.online = req.body.online;
         }
-        console.log("online: " + req.body.online);
-        device.updateAttributes({
-            online: req.body.online
-        })
-        .succcess(function(){
+        models.Device.update(devInfo, {where: {devid: req.params.id}})
+        .then(function (device, err){
+            if (err) {
+                var error = new Error('Create device fail!');
+                error.statusCode = 403;
+                return cb(error);
+            }
+                
             return cb(null, {
                 devid: device.devid
             });
