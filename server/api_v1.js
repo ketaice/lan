@@ -114,16 +114,16 @@ rest.post('/devices', function(req, context, cb){
         })
 });
 
-rest.put('/devices:id', function(req, context, cb){
+rest.put('/devices/:id', function(req, context, cb){
     'use strict';
 
     models.Device.findOne({where: {devid: req.params.id}})
     .then(function(device){
-        // if (!device) {
-        //     var error = new Error('No such device');
-        //     error.statusCode = 404;
-        //     return cb(error);
-        // }
+        if (!device) {
+            var error = new Error('No such device');
+            error.statusCode = 404;
+            return cb(error);
+        }
         
         var devInfo = {};
         if (req.body.password !== 'undefined') {
@@ -139,7 +139,7 @@ rest.put('/devices:id', function(req, context, cb){
         device.updateAttributes({
             online: req.body.online
         })
-        .then(function(res){
+        .succcess(function(){
             return cb(null, {
                 devid: device.devid
             });
