@@ -135,16 +135,10 @@ rest.put('/devices:id', function(req, context, cb){
         if (req.body.online !== 'undefined') {
             devInfo.online = req.body.online;
         }
-        models.Device.update({
+        device.updateAttributes({
             online: req.body.online
-        }, {where: {devid: req.params.id}})
-        .then(function (device, err){
-            if (err) {
-                var error = new Error('Update device fail!');
-                error.statusCode = 403;
-                return cb(error);
-            }
-                
+        })
+        .then(function(res){
             return cb(null, {
                 devid: device.devid
             });
