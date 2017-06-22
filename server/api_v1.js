@@ -125,11 +125,7 @@ rest.put('/devices/:id', function(req, context, cb){
             return cb(error);
         }
         
-        var devInfo = {
-            devid: device.devid,
-            password: req.body.password,
-            ower: req.body.ower
-        };
+        var devInfo = {};
         if (req.body.password !== 'undefined') {
             devInfo.password = req.body.password;
         }
