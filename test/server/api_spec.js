@@ -68,6 +68,27 @@ describe('API services Test', function() {
             .put('/v1/devices/201700100001')
             .send({online: true})
             .end(function (err, res){
+                expect(res.status).to.equal(200);
+                done();
+            });
+    });
+
+    it("should get device online msg", function (done) {
+        agent
+            .get('/v1/devices/201700100002')
+            .end(function(err, res){
+                expect(res.status).to.equal(200);
+                expect(res.online).to.equal(true);
+                done();
+            });
+    });
+
+    it("should able to set device offline", function (done) {
+        agent
+            .put('/v1/devices/201700100001')
+            .send({online: false})
+            .end(function (err, res){
+                expect(res.status).to.equal(200);
                 done();
             });
     });
