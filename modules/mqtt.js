@@ -1,7 +1,7 @@
 var Database = require('../persistence/mongo');
 var db = new Database();
 var authCheck = require('../auth/devbasic');
-var setOnline = request("./utils/setOnline");
+var setOnline = require("./utils/setOnline");
 
 module.exports = function (app) {
   'use strict';
