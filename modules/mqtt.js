@@ -36,7 +36,7 @@ module.exports = function (app) {
       var successCB = function (user) {
         self.clients[packet.clientId] = client;
         userInfo = user;
-        setOnline(userInfo.devid, true);
+        //setOnline(userInfo.devid, true);
         client.connack({
           returnCode: 0
         });
@@ -103,7 +103,7 @@ module.exports = function (app) {
       return client.stream.end();
     });
     client.on('close', function (err) {
-      setOnline(userInfo.devid, false);
+      //setOnline(userInfo.devid, false);
       delete self.clients[client.id];
     });
     return client.on('unsubscribe', function (packet) {
