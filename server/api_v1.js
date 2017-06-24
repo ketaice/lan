@@ -125,16 +125,17 @@ rest.put('/devices/:id', function(req, context, cb){
             return cb(error);
         }
         
-        var devInfo = {};
-        if (req.body.password !== 'undefined') {
-            devInfo.password = req.body.password;
-        }
-        if (req.body.ower !== 'undefined') {
-            devInfo.ower = req.body.ower;
-        }
-        if (req.body.online !== 'undefined') {
-            devInfo.online = req.body.online;
-        }
+        var devInfo = {online: req.body.online};
+        // if (req.body.password !== 'undefined') {
+        //     devInfo.password = req.body.password;
+        // }
+        // if (req.body.ower !== 'undefined') {
+        //     devInfo.ower = req.body.ower;
+        // }
+        // if (req.body.online !== 'undefined') {
+        //     devInfo.online = req.body.online;
+        // }
+        console.log("online: " + req.body.online);
         models.Device.update(devInfo, {where: {devid: req.params.id}})
         .then(function (device, err){
             if (err) {
