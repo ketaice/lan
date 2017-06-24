@@ -1,6 +1,7 @@
 var Database = require('../persistence/mongo');
 var db = new Database();
 var authCheck = require('../auth/devbasic');
+var setOnline = request("./utils/setOnline");
 
 module.exports = function (app) {
   'use strict';
@@ -35,6 +36,7 @@ module.exports = function (app) {
       var successCB = function (user) {
         self.clients[packet.clientId] = client;
         userInfo = user;
+        setOnline(userInfo.devid, true);
         client.connack({
           returnCode: 0
         });
@@ -101,6 +103,7 @@ module.exports = function (app) {
       return client.stream.end();
     });
     client.on('close', function (err) {
+      setOnline(userInfo.devid, false);
       delete self.clients[client.id];
     });
     return client.on('unsubscribe', function (packet) {
