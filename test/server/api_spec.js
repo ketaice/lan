@@ -68,7 +68,7 @@ describe('API services Test', function() {
             .put('/v1/devices/201700100001')
             .send({online: true})
             .end(function (err, res){
-                expect(res.status).to.equal(200);
+                res.statusCode.should.be.equal(200);
                 done();
             });
     });
@@ -77,8 +77,8 @@ describe('API services Test', function() {
         agent
             .get('/v1/devices/201700100002')
             .end(function(err, res){
-                expect(res.status).to.equal(200);
-                expect(res.online).to.equal(true);
+                res.statusCode.should.be.equal(200);
+                res.online.should.be.equal(true);
                 done();
             });
     });
@@ -88,7 +88,7 @@ describe('API services Test', function() {
             .put('/v1/devices/201700100001')
             .send({online: false})
             .end(function (err, res){
-                expect(res.status).to.equal(200);
+                res.statusCode.should.be.equal(200);
                 done();
             });
     });
