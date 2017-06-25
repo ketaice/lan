@@ -30,9 +30,16 @@ module.exports = function (app) {
     client.on('connect', function (packet) {
       console.log("connect from: " + packet.clientId);
 
+      if (packet.clientId === undefined 
+      || packet.clientId.toString().length < 3) {
+        console.log("wrong client id.");
+        return client.connack({
+          returnCode: 5
+        });
+      }
+
       if (packet.username === undefined 
-      || packet.password === undefined
-      || packet.clientId === undefined) {
+      || packet.password === undefined ) {
         return client.connack({
           returnCode: 4
         });
