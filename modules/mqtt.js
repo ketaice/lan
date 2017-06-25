@@ -124,13 +124,15 @@ module.exports = function (app) {
     });
 
     client.on('pingreq', function (packet) {
-      return client.pingresp();
+      client.pingresp();
     });
     client.on('disconnect', function () {
-      return client.stream.end();
+      client.stream.end();
+      console.log("disconnect");
     });
     client.on('error', function (error) {
-      return client.stream.end();
+      client.stream.end();
+      console.log(error);
     });
     client.on('close', function (err) {
       delete self.clients[client.id];
