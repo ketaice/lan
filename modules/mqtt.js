@@ -3,6 +3,20 @@ var db = new Database();
 var authCheck = require('../auth/devbasic');
 var setOnline = require("./utils/setOnline");
 
+function foundClientName(clients, devid) {
+  var k;
+  var found = false;
+  for (k in clients) {
+    var _client = clients[k];
+
+    if (_client.devid === devid) {
+      found = true;
+      break;
+    }
+  }
+  return found;
+}
+
 module.exports = function (app) {
   'use strict';
   return function (client) {
@@ -14,14 +28,14 @@ module.exports = function (app) {
     }
 
     client.on('connect', function (packet) {
-      client.id = packet.client;
+      client.id = packet.clientId;
       client.subscriptions = [];
       if (packet.username === undefined || packet.password === undefined) {
         return client.connack({
-          returnCode: -1
+          returnCode: 4
         });
       }
-      client.id = packet.client;
+
       var reqUserInfo = {
         name: packet.username,
         password: packet.password.toString()
@@ -29,14 +43,18 @@ module.exports = function (app) {
 
       var errorCB = function () {
         return client.connack({
-          returnCode: -1
+          returnCode: 4
         });
       };
 
-      var successCB = function (user) {
+      var successCB = function (device) {
+        if (!foundClientName(self.clients, device.devid)) {
+          setOnline(device.devid, true);
+        }
+        client.devid = device.devid;
         self.clients[packet.clientId] = client;
-        userInfo = user;
-        //setOnline(userInfo.devid, true);
+        userInfo = device;
+
         client.connack({
           returnCode: 0
         });
@@ -103,8 +121,10 @@ module.exports = function (app) {
       return client.stream.end();
     });
     client.on('close', function (err) {
-      //setOnline(userInfo.devid, false);
       delete self.clients[client.id];
+      if (!foundClientName(self.clients, userInfo.devid)) {
+        setOnline(userInfo.devid, false);
+      }
     });
     return client.on('unsubscribe', function (packet) {
       return client.unsuback({
