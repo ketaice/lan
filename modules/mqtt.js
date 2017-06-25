@@ -42,6 +42,8 @@ module.exports = function (app) {
       || packet.password === undefined ) {
         return client.connack({
           returnCode: 4
+        }, function(){
+          client.stream.end();
         });
       }
 
