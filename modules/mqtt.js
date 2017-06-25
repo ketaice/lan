@@ -28,13 +28,18 @@ module.exports = function (app) {
     }
 
     client.on('connect', function (packet) {
-      client.id = packet.clientId;
-      client.subscriptions = [];
-      if (packet.username === undefined || packet.password === undefined) {
+      console.log("connect from: " + packet.clientId);
+
+      if (packet.username === undefined 
+      || packet.password === undefined
+      || packet.clientId === undefined) {
         return client.connack({
           returnCode: 4
         });
       }
+
+      client.id = packet.clientId;
+      client.subscriptions = [];
 
       var reqUserInfo = {
         name: packet.username,
