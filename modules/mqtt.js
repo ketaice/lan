@@ -42,8 +42,6 @@ module.exports = function (app) {
       || packet.password === undefined ) {
         return client.connack({
           returnCode: 4
-        }, function(){
-          client.stream.end();
         });
       }
 
@@ -137,9 +135,11 @@ module.exports = function (app) {
       console.log(error);
     });
     client.on('close', function (err) {
-      delete self.clients[client.id];
-      if (!foundClientName(self.clients, userInfo.devid)) {
-        setOnline(userInfo.devid, false);
+      if (typeof(self.clients[client.id]) !== "undefined"){
+        delete self.clients[client.id];
+        if (!foundClientName(self.clients, userInfo.devid)) {
+          setOnline(userInfo.devid, false);
+        }
       }
     });
     return client.on('unsubscribe', function (packet) {
