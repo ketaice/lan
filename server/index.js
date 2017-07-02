@@ -129,4 +129,39 @@ router.get('/register', function (req, res) {
   res.render('user/register', {title: 'Lan Account Manager', errors: ''});
 });
 
+router.get('/devices', function (req, res) {
+  'use strict';
+  if (!req.isAuthenticated()) {
+    return res.redirect('/login');
+  }
+  models.Device.findAll()
+    .then(function(devices){
+        var devList = [];
+
+        if (!devices) {
+            return res.render('/device',
+                        {title: 'Device list is Empty!', 
+                        devices: devList});
+        }
+
+        devices.forEach(function(device) {
+            devList.push({
+                devid: device.devid,
+                online: device.online,
+                ower: device.ower
+            });
+        }, this);
+
+        return res.render('/device',
+                        {title: 'Device list', 
+                        devices: devList});
+    })
+    .catch(function (err){
+        console.log(`findAll err:` + err);
+        return res.render('/device',
+                        {title: 'Get Device list is errot!', 
+                        devices: devList});
+    });
+});
+
 module.exports = router;

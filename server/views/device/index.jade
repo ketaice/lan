@@ -1,0 +1,12 @@
+extends ../layout
+block content
+  div.container
+    div(class='panel panel-default')
+      div(class='panel-heading')
+        h3 #{title}
+      div(class="panel-body")
+        table
+          tbody
+            for dev in devices
+              tr
+                td #{dev.devid} #{dev.ower} #{dev.online}
