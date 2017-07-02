@@ -139,7 +139,7 @@ router.get('/devices', function (req, res) {
         var devList = [];
 
         if (!devices) {
-            return res.render('/device/index',
+            return res.render('device/index',
                         {title: 'Device list is Empty!', 
                         devices: devList});
         }
@@ -152,13 +152,13 @@ router.get('/devices', function (req, res) {
             });
         }, this);
 
-        return res.render('/device/index',
+        return res.render('device/index',
                         {title: 'Device list', 
                         devices: devList});
     })
     .catch(function (err){
         console.log(`findAll err:` + err);
-        return res.render('/device/index',
+        return res.render('device/index',
                         {title: 'Get Device list is errot!', 
                         devices: devList});
     });

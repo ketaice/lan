@@ -5,8 +5,15 @@ block content
       div(class='panel-heading')
         h3 #{title}
       div(class="panel-body")
-        table
+        table(class="table")
+          thead
+            tr
+              th Device ID
+              th Ower
+              th Online
           tbody
             for dev in devices
               tr
-                td #{dev.devid} #{dev.ower} #{dev.online}
+                td #{dev.devid}
+                td #{dev.ower}
+                td #{dev.online}
