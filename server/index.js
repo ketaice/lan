@@ -134,7 +134,8 @@ router.get('/devices', function (req, res) {
   if (!req.isAuthenticated()) {
     return res.redirect('/login');
   }
-  models.Device.findAll()
+  //console.log("login user:" + req.user.name);
+  models.Device.findAll({where:{ower: req.user.name}})
     .then(function(devices){
         var devList = [];
 
