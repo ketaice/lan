@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+  div.container
+    h2 #{title}
+    #{errors.message}
+    form(role='form', method="post", action="/devices")
+      div(class="form-group")
+        label(from="devid") Device ID
+        input(type="text", name="devid", class="form-control")
+
+      div(class="form-group")
+        label(from="password") Password
+        input(type="password", name="password", class="form-control")
+
+      div(class="form-group")
+        label(from="owner") Owner
+        input(type="text", name="owner", class="form-control")
+
+      div.actions
+        br
+        input(type="submit", value="create", class="btn btn-primary")
