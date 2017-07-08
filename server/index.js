@@ -171,6 +171,29 @@ router.get('/devices', function (req, res) {
     });
 });
 
+router.get('/devices/:id', function (req, res) {
+  'use strict';
+  if (!req.isAuthenticated()) {
+    return res.redirect('/login');
+  }
+
+  models.Device.findOne({ where: { devid: req.params.id } })
+    .then(function (device) {
+      if (!device) {
+        return res.sendStatus(403);
+      }
+
+      return res.render('device/detail', {
+        title: device.devid + '\'s Profile',
+        device: {
+          devid: device.devid,
+          online: device.online,
+          owner: device.owner
+        }
+      });
+    });
+});
+
 router.post('/devices', function (req, res) {
   'use strict';
   if (!req.isAuthenticated()) {
@@ -187,7 +210,7 @@ router.post('/devices', function (req, res) {
     .validate()
     .then(function (err) {
       if (err) {
-        return res.render('devices/create', { devices: devInfo, title: 'Something Error', errors: err.errors });
+        return res.render('device/create', { devices: devInfo, title: 'Something Error', errors: err.errors });
       }
       models.Device.create(devInfo).then(function (device, err) {
         if (err) {
