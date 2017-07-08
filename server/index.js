@@ -135,33 +135,39 @@ router.get('/devices', function (req, res) {
     return res.redirect('/login');
   }
   //console.log("login user:" + req.user.name);
-  models.Device.findAll({where:{owner: req.user.name}})
-    .then(function(devices){
-        var devList = [];
+  models.Device.findAll({ where: { owner: req.user.name } })
+    .then(function (devices) {
+      var devList = [];
 
-        if (!devices) {
-            return res.render('device/index',
-                        {title: 'Device list is Empty!', 
-                        devices: devList});
-        }
-
-        devices.forEach(function(device) {
-            devList.push({
-                devid: device.devid,
-                online: device.online,
-                owner: device.owner
-            });
-        }, this);
-
+      if (!devices) {
         return res.render('device/index',
-                        {title: 'Device list', 
-                        devices: devList});
+          {
+            title: 'Device list is Empty!',
+            devices: devList
+          });
+      }
+
+      devices.forEach(function (device) {
+        devList.push({
+          devid: device.devid,
+          online: device.online,
+          owner: device.owner
+        });
+      }, this);
+
+      return res.render('device/index',
+        {
+          title: 'Device list',
+          devices: devList
+        });
     })
-    .catch(function (err){
-        console.log(`findAll err:` + err);
-        return res.render('device/index',
-                        {title: 'Get Device list is errot!', 
-                        devices: devList});
+    .catch(function (err) {
+      console.log(`findAll err:` + err);
+      return res.render('device/index',
+        {
+          title: 'Get Device list is errot!',
+          devices: devList
+        });
     });
 });
 
@@ -172,28 +178,28 @@ router.post('/devices', function (req, res) {
   }
 
   var devInfo = {
-      devid: req.body.devid,
-      password: req.body.password,
-      owner: req.body.owner
-    };
+    devid: req.body.devid,
+    password: req.body.password,
+    owner: req.body.owner
+  };
   
   models.Device.build(devInfo)
-        .validate()
-        .then(function (err) {
-            if (err) {
-              return res.render('devices/create', {devices: devInfo, title: 'Something Error', errors: err.errors});
-            }
-            models.Device.create(devInfo).then(function (device, err){
-              if (err) {
-                return res.render('/');
-              }
-              return res.render('success', {
-                title: 'Create Success,' + device.devid,
-                account: device,
-                uid: device.uid
-              });
-            });
+    .validate()
+    .then(function (err) {
+      if (err) {
+        return res.render('devices/create', { devices: devInfo, title: 'Something Error', errors: err.errors });
+      }
+      models.Device.create(devInfo).then(function (device, err) {
+        if (err) {
+          return res.render('/');
+        }
+        return res.render('success', {
+          title: 'Create Success,' + device.devid,
+          account: device,
+          uid: device.uid
         });
+      });
+    });
 });
 
 router.get('/devices/create', function (req, res) {
