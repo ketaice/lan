@@ -165,6 +165,37 @@ router.get('/devices', function (req, res) {
     });
 });
 
+router.post('/devices', function (req, res) {
+  'use strict';
+  if (!req.isAuthenticated()) {
+    return res.redirect('/login');
+  }
+
+  var devInfo = {
+      devid: req.body.devid,
+      password: req.body.password,
+      owner: req.body.owner
+    };
+  
+  models.Device.build(devInfo)
+        .validate()
+        .then(function (err) {
+            if (err) {
+              return res.render('devices/create', {devices: devInfo, title: 'Something Error', errors: err.errors});
+            }
+            models.Device.create(devInfo).then(function (device, err){
+              if (err) {
+                return res.render('/');
+              }
+              return res.render('success', {
+                title: 'Create Success,' + device.devid,
+                account: device,
+                uid: device.uid
+              });
+            });
+        });
+});
+
 router.get('/devices/create', function (req, res) {
   'use strict';
   res.render('device/create', {title: 'Create Devices', errors: ''});
