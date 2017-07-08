@@ -14,7 +14,7 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
-      ower: {
+      owner: {
         type: Sequelize.STRING
       },
       online: {

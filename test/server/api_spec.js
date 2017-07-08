@@ -16,7 +16,7 @@ describe('API services Test', function() {
             devid: '201700100002',
             password: '12345678',
             expiration: '2027-01-01',
-            ower: 'admin'
+            owner: 'admin'
         });
 
         server = app.listen(8899, function () {
@@ -57,7 +57,7 @@ describe('API services Test', function() {
     it("should able to add a new device", function (done) {
         agent
             .post('/v1/devices')
-            .send({devid: '201700100003', password: '12345678', ower: 'admin'})
+            .send({devid: '201700100003', password: '12345678', owner: 'admin'})
             .end(function (err, res) {
                 done();
             });

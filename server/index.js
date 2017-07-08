@@ -135,7 +135,7 @@ router.get('/devices', function (req, res) {
     return res.redirect('/login');
   }
   //console.log("login user:" + req.user.name);
-  models.Device.findAll({where:{ower: req.user.name}})
+  models.Device.findAll({where:{owner: req.user.name}})
     .then(function(devices){
         var devList = [];
 
@@ -149,7 +149,7 @@ router.get('/devices', function (req, res) {
             devList.push({
                 devid: device.devid,
                 online: device.online,
-                ower: device.ower
+                owner: device.owner
             });
         }, this);
 

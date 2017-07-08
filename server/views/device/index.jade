@@ -9,13 +9,13 @@ block content
           thead
             tr
               th Device ID
-              th Ower
+              th owner
               th Online
           tbody
             for dev in devices
               tr
                 td #{dev.devid}
-                td #{dev.ower}
+                td #{dev.owner}
                 td #{dev.online}
         br
         a(href="/devices/create", class="btn btn-primary", role="button") create

@@ -39,7 +39,7 @@ rest.get('/devices', function(req, context, cb){
             devList.push({
                 devid: device.devid,
                 online: device.online,
-                ower: device.ower
+                owner: device.owner
             });
         }, this);
 
@@ -72,7 +72,7 @@ rest.get('/devices/:id', function(req, context, cb){
         return cb(null, {devices: {
             devid: device.devid,
             online: device.online,
-            ower: device.ower
+            owner: device.owner
         }});
     });
 });
@@ -88,7 +88,7 @@ rest.post('/devices', function(req, context, cb){
     var devInfo = {
         devid: req.body.devid,
         password: req.body.password,
-        ower: req.body.ower
+        owner: req.body.owner
     };
 
     models.Device.build(devInfo)
@@ -108,7 +108,7 @@ rest.post('/devices', function(req, context, cb){
                 
                 return cb(null, {
                     devid: device.devid,
-                    ower: device.ower
+                    owner: device.owner
                 });
             })
         })
@@ -129,8 +129,8 @@ rest.put('/devices/:id', function(req, context, cb){
         if (typeof(req.body.password) !== 'undefined') {
             devInfo.password = req.body.password;
         }
-        if (typeof(req.body.ower) !== 'undefined') {
-            devInfo.ower = req.body.ower;
+        if (typeof(req.body.owner) !== 'undefined') {
+            devInfo.owner = req.body.owner;
         }
         if (typeof(req.body.online) !== 'undefined') {
             devInfo.online = req.body.online;

@@ -58,7 +58,7 @@ module.exports = function(sequelize, DataTypes) {
         notEmpty: true
       }
     },
-    ower: {
+    owner: {
       type: DataTypes.STRING,
       allowNull: false
     },
