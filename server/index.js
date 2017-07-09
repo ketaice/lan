@@ -184,7 +184,7 @@ router.get('/devices/:id', function (req, res) {
       }
 
       return res.render('device/detail', {
-        title: device.devid + '\'s Profile',
+        title: device.devid,
         device: {
           devid: device.devid,
           online: device.online,
