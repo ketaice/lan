@@ -2,7 +2,7 @@
 var db = new Database();
 var authCheck = require('../auth/basic');
 var getAuthInfo = require('./utils/getAuth');*/
-var configure=require("./app").configure;
+var configure=require("../app").configure;
 var websocket = require('websocket-stream');
 var Connection = require('mqtt-connection')
 
@@ -15,7 +15,7 @@ module.exports = function (app) {
       var connection = new Connection(stream);
       
       app.mqtt(connection);
-      
+
       /*if (!socket.upgradeReq.headers.authorization || socket.upgradeReq.headers.authorization === undefined) {
         socket.send(JSON.stringify({error: 'no auth'}));
         return socket.close();
