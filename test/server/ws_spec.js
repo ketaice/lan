@@ -6,8 +6,9 @@ var website = "http://localhost:8899/";
 var assert = require('chai').assert;
 var should = require('should');
 var supertest = require('supertest');
-var WebSocket = require('ws');
-var WebSocketServer = WebSocket.Server;
+// var WebSocket = require('ws');
+// var WebSocketServer = WebSocket.Server;
+var http = require('http');
 var env = require("../../app.js");
 
 describe('WebSocket Services Test', function () {
@@ -17,8 +18,11 @@ describe('WebSocket Services Test', function () {
   before(function () {
     server = app.listen(8899, function () {
     });
-    webSocketServer = new WebSocketServer({port: 8898});
-    app.websocket(webSocketServer);
+    // webSocketServer = new WebSocketServer({port: 8898});
+    // app.websocket(webSocketServer);
+    webSocketServer = http.createServer();
+    mqtt.attachWebsocketServer(webSocketServer, app.mqtt);
+    webSocketServer.listen(8898);
   });
 
   after(function () {
@@ -27,7 +31,7 @@ describe('WebSocket Services Test', function () {
   });
 
   it('basic connection', function (done) {
-    var ws = new WebSocket('ws://admin:admin@localhost:8898/');
+/*    var ws = new WebSocket('ws://admin:admin@localhost:8898/');
 
     ws.on('open', function open() {
       ws.send('something');
@@ -37,10 +41,22 @@ describe('WebSocket Services Test', function () {
       if (data === "connection") {
         done();
       }
+    });*/
+
+    var ws = mqtt.connect('ws://127.0.0.1:8898/', {
+      username: '201700100001',
+      password: '12345678'
+    });
+
+    ws.on('connect', function (packet){
+      if (packet.returnCode === 0) {
+        client.end();
+        done();
+      }
     });
   });
 
-  it('auth failure', function (done) {
+  /*it('auth failure', function (done) {
     var ws = new WebSocket('ws://localhost:8898/');
 
     ws.on('open', function open() {
@@ -80,5 +96,5 @@ describe('WebSocket Services Test', function () {
         done();
       }
     });
-  });
+  });*/
 });
