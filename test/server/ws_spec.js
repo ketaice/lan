@@ -46,7 +46,7 @@ describe('WebSocket Services Test', function () {
 
     ws.on('connect', function (packet){
       if (packet.returnCode === 0) {
-        client.end();
+        ws.end();
         done();
       }
     });
