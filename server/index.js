@@ -225,7 +225,7 @@ router.post('/devices', function (req, res) {
     });
 });
 
-router.get('/devices/create', function (req, res) {
+router.get('/device/create', function (req, res) {
   'use strict';
   res.render('device/create', {title: 'Create Devices', errors: ''});
 });
