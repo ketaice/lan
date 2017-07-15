@@ -6,9 +6,8 @@ var website = "http://localhost:8899/";
 var assert = require('chai').assert;
 var should = require('should');
 var supertest = require('supertest');
-// var WebSocket = require('ws');
-// var WebSocketServer = WebSocket.Server;
-var http = require('http');
+var WebSocket = require('ws');
+var WebSocketServer = WebSocket.Server;
 var env = require("../../app.js");
 
 describe('WebSocket Services Test', function () {
@@ -18,11 +17,8 @@ describe('WebSocket Services Test', function () {
   before(function () {
     server = app.listen(8899, function () {
     });
-    // webSocketServer = new WebSocketServer({port: 8898});
-    // app.websocket(webSocketServer);
-    webSocketServer = http.createServer();
-    mqtt.attachWebsocketServer(webSocketServer, app.mqtt);
-    webSocketServer.listen(8898);
+    webSocketServer = new WebSocketServer({port: 8898});
+    app.websocket(webSocketServer);
   });
 
   after(function () {

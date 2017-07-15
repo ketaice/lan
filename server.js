@@ -4,7 +4,6 @@ var mqtt = require("mqtt");
 var coap = require("coap");
 var WebSocketServer = require('ws').Server;
 var config = require('config');
-var http = require('http');
 
 start = function (opts, callback) {
   var app = configure();
@@ -15,11 +14,8 @@ start = function (opts, callback) {
 
 
   if (_.include(app.config.get('modules'), 'websocket')) {
-    /*var webSocketServer = new WebSocketServer({port: config.get('port.websocket')});
-    app.websocket(webSocketServer);*/
-    var webSocketServer = http.createServer();
-    mqtt.attachWebsocketServer(webSocketServer, app.mqtt);
-    webSocketServer.listen(config.get('port.websocket'));
+    var webSocketServer = new WebSocketServer({port: config.get('port.websocket')});
+    app.websocket(webSocketServer);
     console.log("websocket server listening on port %d", config.get('port.websocket'));
   }
 
