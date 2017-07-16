@@ -7,7 +7,7 @@ block content
         script(src='https://unpkg.com/mqtt/dist/mqtt.min.js')
         script(type='text/javascript')
             var client = mqtt.connect("ws://127.0.0.1:8898/");
-            client.subscribe("/devices/" + #{dev.devid} + '/#');
+            client.subscribe("/devices/" + #{device.devid} + '/#');
             client.on("message", function (topic, payload){
                 alert([topic, payload].join(": "));
                 client.end();
