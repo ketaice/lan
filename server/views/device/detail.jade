@@ -5,8 +5,24 @@ block content
         link(href='http://vjs.zencdn.net/5.8.8/video-js.css', rel='stylesheet')
         script(src='http://vjs.zencdn.net/5.8.8/video.js')
         script(src='https://unpkg.com/mqtt/dist/mqtt.min.js')
+        script(type='text/javascript')
+            var client = mqtt.connect("ws://127.0.0.1:8898/");
+            client.subscribe("/devices/" + #{dev.devid} + '/#');
+            client.on("message", function (topic, payload){
+                alert([topic, payload].join(": "));
+                client.end();
+            });
         h2 #{title}
         div.player
             video(id="my-player", class="video-js", controls, width="640", height="360", data-setup={})
-        div.control
-            
+
+        div(class="form-group")
+            label(from="Play") Play
+            input(type='text', name='Play', id='inputPlay', class='form-control')
+            input(type='button', id='btnPlay', value='Play', class='btn btn-primary')
+        
+        div(class="form-group")
+            label(from="Play") Message
+            button(id="btnMessage", value="Message", class="btn btn-primary")
+            br
+            textarea(id='mqttMsg', class="form-group")
