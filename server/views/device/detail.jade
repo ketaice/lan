@@ -17,7 +17,7 @@ block content
             });
         h2 #{title}
         div.player
-            video(id="my-player", class="video-js", controls, width="640", height="360", data-setup={})
+            video(id="my-player", class="video-js", controls, preload="auto", autoplay, width="640", height="360", data-setup={})
                 source(src="rtmp://218.107.52.44:1935/device_1/live_2_1", type="rtmp/flv")
 
         div(class="form-group")
