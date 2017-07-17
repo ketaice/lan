@@ -2,8 +2,8 @@ extends ../layout
 
 block content
     div.container
-        link(href='http://cdn.bootcss.com/video.js/5.8.8/video-js.css', rel='stylesheet')
-        script(src='http://cdn.bootcss.com/video.js/5.8.8/video.js')
+        link(href='http://vjs.zencdn.net/5.8.8/video-js.css', rel='stylesheet')
+        script(src='http://vjs.zencdn.net/5.8.8/video.js')
         script(src='https://unpkg.com/mqtt/dist/mqtt.min.js')
         script(type='text/javascript')
             var client = mqtt.connect("ws://" + window.location.host + ":8898/", {
@@ -17,7 +17,7 @@ block content
             });
         h2 #{title}
         div.player
-            video(id="my-player", class="video-js", controls, preload="auto",, width="640", height="360", data-setup={})
+            video(id="my-player", class="video-js", controls, preload="auto", autoplay, width="640", height="360", data-setup={})
                 source(src="rtmp://218.107.52.44:1935/device_1/live_2_1", type="rtmp/flv")
 
         div(class="form-group")
