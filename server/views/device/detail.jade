@@ -6,18 +6,19 @@ block content
         script(src='http://vjs.zencdn.net/5.8.8/video.js')
         script(src='https://unpkg.com/mqtt/dist/mqtt.min.js')
         script(type='text/javascript')
-            var client = mqtt.connect("ws://127.0.0.1:8898/", {
+            var client = mqtt.connect("ws://" + window.location.host + ":8898/", {
                 username: '#{device.devid}',
                 password: '12345678'
             });
             client.subscribe("/devices/" + '#{device.devid}' + '/#');
             client.on("message", function (topic, payload){
                 alert([topic, payload].join(": "));
-                client.end();
+                //client.end();
             });
         h2 #{title}
         div.player
             video(id="my-player", class="video-js", controls, width="640", height="360", data-setup={})
+                source(src="rtmp://218.107.52.44:1935/device_1/live_2_1", type="rtmp/flv")
 
         div(class="form-group")
             label(from="Play") Play
