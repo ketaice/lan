@@ -6,27 +6,42 @@ block content
         script(src='http://vjs.zencdn.net/5.8.8/video.js')
         script(src='https://unpkg.com/mqtt/dist/mqtt.min.js')
         script(type='text/javascript')
-            var client = mqtt.connect("ws://" + window.location.host + ":8898/", {
-                username: '#{device.devid}',
-                password: '12345678'
-            });
-            client.subscribe("/devices/" + '#{device.devid}' + '/#');
-            client.on("message", function (topic, payload){
-                alert([topic, payload].join(": "));
-                //client.end();
+            $(document).ready(function(){
+                var client = mqtt.connect("ws://" + window.location.host + ":8898/", {
+                    username: '#{device.devid}',
+                    password: '12345678'
+                });
+                client.subscribe("/devices/" + '#{device.devid}' + '/#');
+                client.on("message", function (topic, payload){
+                    //alert([topic, payload].join(": "));
+                    $("#mqttMsg").append([topic, payload].join(": ") + "\n");
+                    //client.end();
+                });
+                var player = videojs('my-player');
+                var playURL = "rtmp://218.107.52.44:1935/" + "device_1/live_2_1";
+                player.ready(function(){
+                    $("#inputPlay").val(playURL);
+                    $("#btnPlay").click(function(){
+                        //player.stop();
+                        var srcObj =  {src: $("#inputPlay").val(), type: 'rtmp/flv'};
+                        player.src(srcObj);
+                        player.play();
+                    });
+                });
             });
         h2 #{title}
         div.player
-            video(id="my-player", class="video-js", controls, preload="auto", autoplay, width="640", height="360", data-setup={})
-                source(src="rtmp://218.107.52.44:1935/device_1/live_2_1", type="rtmp/flv")
-
-        div(class="form-group")
-            label(from="Play") Play
-            input(type='text', name='Play', id='inputPlay', class='form-control')
-            input(type='button', id='btnPlay', value='Play', class='btn btn-primary')
-        
-        div(class="form-group")
-            label(from="Message") Message
-            input(type='button', id="btnMessage", value="Message", class="btn btn-primary")
+            video(id="my-player", class="video-js", controls, preload="auto", width="640", height="360", data-setup={})
+        br
+        form(role="form")
+            div(class="form-group")
+                div(class="col-sm-10")
+                    input(type='text', id='inputPlay', class='form-control')
+                div(class="col-sm-2")
+                    input(type='button', id='btnPlay', value='Play', class='btn btn-default')
             br
-            textarea(id='mqttMsg', class="form-group")
+            div(class="form-group")
+                label(for="mqttMsg") Message
+                textarea(id='mqttMsg', class="form-control", rows="12")
+                br
+                input(type='button', id="btnMessage", value="Message", class="btn btn-default")

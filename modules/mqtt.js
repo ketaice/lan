@@ -61,7 +61,9 @@ module.exports = function (app) {
 
       var successCB = function (device) {
         if (!foundClientName(self.clients, device.devid)) {
-          setOnline(device.devid, true);
+          if (client.id.match(device.devid) !== null) {
+            setOnline(device.devid, true);
+          }
         }
         client.devid = device.devid;
         self.clients[packet.clientId] = client;
@@ -138,7 +140,9 @@ module.exports = function (app) {
       if (typeof(self.clients[client.id]) !== "undefined"){
         delete self.clients[client.id];
         if (!foundClientName(self.clients, userInfo.devid)) {
-          setOnline(userInfo.devid, false);
+          if (client.id.match(userInfo.devid) !== null) {
+            setOnline(userInfo.devid, false);
+          }
         }
       }
     });
