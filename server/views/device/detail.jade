@@ -22,7 +22,9 @@ block content
                 player.ready(function(){
                     $("#inputPlay").val(playURL);
                     $("#btnPlay").click(function(){
-                        //player.stop();
+                        try{
+                            player.pause();
+                        }catch(e){}
                         var srcObj =  {src: $("#inputPlay").val(), type: 'rtmp/flv'};
                         player.src(srcObj);
                         player.play();
